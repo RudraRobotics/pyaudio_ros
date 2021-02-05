@@ -36,6 +36,8 @@ def talker():
     while not rospy.is_shutdown():
         pcm = audio_stream.read(frame_length)
         pcm = struct.unpack_from("h" * frame_length, pcm)
+        print(len(pcm))
+        audio.AudioData.data = pcm
         pub.publish(audio)
         rate.sleep()
 
