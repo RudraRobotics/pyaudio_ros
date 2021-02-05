@@ -2,6 +2,7 @@
 import rospy
 from pyaudio_ros.msg import Audio
 import pyaudio
+import struct
 
 def talker():
     pub = rospy.Publisher('audio', Audio, queue_size=10)
@@ -29,6 +30,8 @@ def talker():
                 input_device_index=input_device_index)
     while not rospy.is_shutdown():
         audio = Audio()
+        pcm = audio_stream.read(frame_length)
+        pcm = struct.unpack_from("h" * frame_length, pcm)
         pub.publish(audio)
         rate.sleep()
 
