@@ -1,11 +1,32 @@
 #!/usr/bin/env python3
 import rospy
 from pyaudio_ros.msg import Audio
+import pyaudio
 
 def talker():
     pub = rospy.Publisher('audio', Audio, queue_size=10)
     rospy.init_node('pyaudio_ros_node', anonymous=True)
     rate = rospy.Rate(10) # 10hz
+   
+    sample_rate = 16000
+    frame_length = 1
+    input_device_index = None
+
+    if rospy.has_param('pyaudio_ros/sample_rate'):
+        sample_rate = rospy.get_param('/pyaudio_ros/sample_rate')
+    if rospy.has_param('pyaudio_ros/frame_length'):
+        frame_length = rospy.get_param('/pyaudio_ros/frame_length')
+    if rospy.has_param('pyaudio_ros/input_device_index'):
+        input_device_index = rospy.get_param('/pyaudio_ros/input_device_index')
+
+    pa = pyaudio.PyAudio()
+    audio_stream = pa.open(
+                rate=sample_rate,
+                channels=1,
+                format=pyaudio.paInt16,
+                input=True,
+                frames_per_buffer=frame_length,
+                input_device_index=input_device_index)
     while not rospy.is_shutdown():
         audio = Audio()
         pub.publish(audio)

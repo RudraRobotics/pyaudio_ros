@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+	<node pkg="pyaudio_ros" type="pyaudio_ros_node.py" name="pyaudio_ros"/>
+</launch>
