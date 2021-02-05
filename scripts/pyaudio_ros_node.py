@@ -10,7 +10,7 @@ def talker():
     rate = rospy.Rate(10) # 10hz
    
     sample_rate = 16000
-    frame_length = 1
+    frame_length = 512
     input_device_index = None
 
     if rospy.has_param('pyaudio_ros/sample_rate'):
@@ -32,11 +32,10 @@ def talker():
                 input=True,
                 frames_per_buffer=frame_length,
                 input_device_index=input_device_index)
+    audio = Audio()
     while not rospy.is_shutdown():
-        audio = Audio()
         pcm = audio_stream.read(frame_length)
         pcm = struct.unpack_from("h" * frame_length, pcm)
-        print(pcm)
         pub.publish(audio)
         rate.sleep()
 
@@ -45,3 +44,4 @@ if __name__ == '__main__':
         talker()
     except rospy.ROSInterruptException:
         pass
+
