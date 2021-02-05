@@ -19,6 +19,10 @@ def talker():
         frame_length = rospy.get_param('/pyaudio_ros/frame_length')
     if rospy.has_param('pyaudio_ros/input_device_index'):
         input_device_index = rospy.get_param('/pyaudio_ros/input_device_index')
+    
+    rospy.loginfo('sample_rate: %s', sample_rate)
+    rospy.loginfo('frame_length: %s', frame_length)
+    rospy.loginfo('input_device_index: %s', input_device_index)
 
     pa = pyaudio.PyAudio()
     audio_stream = pa.open(
@@ -32,6 +36,7 @@ def talker():
         audio = Audio()
         pcm = audio_stream.read(frame_length)
         pcm = struct.unpack_from("h" * frame_length, pcm)
+        print(pcm)
         pub.publish(audio)
         rate.sleep()
 
