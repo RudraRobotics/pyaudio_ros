@@ -8,9 +8,7 @@ project(pyaudio_ros)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  audio_common_msgs
   rospy
-  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -47,10 +45,6 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  Audio.msg
-)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -67,10 +61,6 @@ add_message_files(
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  audio_common_msgs
-)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -104,8 +94,6 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES pyaudio_ros
-  CATKIN_DEPENDS message_runtime
-#  DEPENDS system_lib
 )
 
 ###########
