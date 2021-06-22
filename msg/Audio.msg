@@ -1,2 +1,0 @@
-audio_common_msgs/AudioInfo AudioInfo
-audio_common_msgs/AudioData AudioData
